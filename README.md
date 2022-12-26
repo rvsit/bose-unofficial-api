@@ -33,9 +33,10 @@ When connected to wifi, the devices will open a secured websocket port on 8082. 
 
 The following functions are available (checked if implemented):
 
+- [x] `/system/info` (GET request, `getSystemInfo()`)
+- [x] `/system/power/control` (GET&POST request, `getSystemPowerControl(), setSystemPowerControl(power: 'ON' | 'OFF')`)
 - [] `/content/nowPlaying` (Req type oq2)
 - [] `/content/playbackRequest` (Req type oq2)
-- [] `/system/info` (Req type oq2)
 - [] `/homekit/info` (Req type oq2)
 - [] `/cloudSync` (Req type pq2)
 - [] `/audio/zone` (Req type oq2)
@@ -47,7 +48,6 @@ The following functions are available (checked if implemented):
 - [] `/system/sources/status` (Req type oq2)
 - [] `/system/productSettings` (Req type oq2)
 - [] `/clock` (Req type oq2)
-- [] `/system/power/control` (Req type oq2)
 - [] `/system/reset` (Req type oq2)
 - [] `/bluetooth/sink/pairable` (Req type oq2)
 - [] `/bluetooth/sink/status` (Req type oq2)
