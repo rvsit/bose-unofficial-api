@@ -102,7 +102,11 @@ class WebsocketSession {
           resource,
           data => {
             clearTimeout(timeout);
-            resolve(data);
+            if (data.error) {
+              reject(new Error(JSON.stringify(data.error)));
+            } else {
+              resolve(data);
+            }
           },
           body,
         );
