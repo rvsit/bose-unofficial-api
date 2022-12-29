@@ -1,5 +1,6 @@
 import { ulid } from 'ulid';
 import { MessageEvent, WebSocket } from 'ws';
+import deepCopy from './functions/deepCopy';
 
 export type WebsocketCallback = (data: any) => void;
 
@@ -54,9 +55,7 @@ class WebsocketSession {
     protected readonly debug = false,
   ) {
     const url = `wss://${ip}:8082?product=${this.productId}`;
-    if (debug) {
-      console.log('Connecting to: ', url);
-    }
+    this.log('Connecting to ' + url);
     this.socket = new WebSocket(url, 'eco2', {
       //we get an 'invalid' certificate, maybe in the future check for the actual BOSE certificate
       rejectUnauthorized: false,
@@ -65,8 +64,14 @@ class WebsocketSession {
     this.socket.onmessage = this.onMessage.bind(this);
   }
 
-  static async create(ip: string, jwtToken: string) {
-    const session = new WebsocketSession(ip, jwtToken);
+  protected log(message?: any, ...optionalParams: any[]) {
+    if (this.debug) {
+      console.log(message, ...optionalParams);
+    }
+  }
+
+  static async create(ip: string, jwtToken: string, debug = false) {
+    const session = new WebsocketSession(ip, jwtToken, debug);
     await session.awaitOpen();
     await session.getSystemInfo();
     return session;
@@ -82,7 +87,11 @@ class WebsocketSession {
   private onMessage(message: MessageEvent) {
     var data = JSON.parse(message.data.toString('utf8'));
     if (this.debug) {
-      console.debug('Message received: ', data);
+      const dataCopy = deepCopy(data);
+      if (dataCopy.header?.token) {
+        dataCopy.header.token = '_REDACTED_';
+      }
+      this.log('Message received: ', dataCopy);
     }
     if (data.header && data.header.reqID) {
       const callback = this.expectedResponses[data.header.reqID];
