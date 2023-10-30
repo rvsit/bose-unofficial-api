@@ -1,0 +1,15 @@
+[flake8]
+# List of errors and warnings to ignore
+ignore = E203, E266, E501, W503
+
+# E203: Whitespace before ':'
+# E266: Too many leading '#' for block comments
+# E501: Line too long
+# W503: Line break before binary operator
+
+# Maximum allowed line length
+# Black also defaults to 88 characters per line
+max-line-length = 88
+
+# Maximum allowed McCabe complexity of your functions
+max-complexity = 18
