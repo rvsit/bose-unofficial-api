@@ -1,6 +1,8 @@
 # GET /content/nowPlaying
 
-Response:
+## Example Responses:
+
+#### When playing spotify
 
 ```json
 {
@@ -12,7 +14,7 @@ Response:
     "reqID": 3,
     "version": 1.0,
     "status": 200,
-    "token": "REDACTED"
+    "token": "***"
   },
   "body": {
     "collectData": true,
@@ -83,6 +85,35 @@ Response:
       "favorite": "NO",
       "rating": "UNRATED",
       "type": "REGULAR"
+    }
+  }
+}
+```
+
+#### When off
+
+```json
+{
+  "header": {
+    "device": "00000000-0000-0000-0000-000000000000",
+    "resource": "/content/nowPlaying",
+    "method": "GET",
+    "msgtype": "RESPONSE",
+    "reqID": 3,
+    "version": 1.0,
+    "status": 200,
+    "token": "***"
+  },
+  "body": {
+    "container": {
+      "contentItem": {
+        "isLocal": true,
+        "presetable": false,
+        "source": "INVALID_SOURCE"
+      }
+    },
+    "source": {
+      "sourceDisplayName": "INVALID_SOURCE"
     }
   }
 }

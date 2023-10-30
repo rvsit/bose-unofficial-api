@@ -33,87 +33,87 @@ When connected to wifi, the devices will open a secured websocket port on 8082. 
 
 The following functions are available (checked if implemented):
 
-- [x] `/system/info` (GET request, `getSystemInfo()`)
+- [x] `/system/info` (GET request, `load_device_info()`)
 - [ ] `/system/power/control` (GET&POST request, `getSystemPowerControl(), setSystemPowerControl(power: 'ON' | 'OFF')`)
-- [ ] `/content/nowPlaying` (Req type oq2)
-- [ ] `/content/playbackRequest` (Req type oq2)
-- [ ] `/homekit/info` (Req type oq2)
+- [x] `/content/nowPlaying` (GET, `get_now_playing()`)
+- [ ] `/content/playbackRequest`
+- [ ] `/homekit/info`
 - [ ] `/cloudSync` (Req type pq2)
-- [ ] `/audio/zone` (Req type oq2)
-- [ ] `/audio/volume` (Req type oq2)
+- [ ] `/audio/zone`
+- [ ] `/audio/volume`
 - [ ] `/content/transportControl` (Req type pq2)
-- [ ] `/accessories` (Req type oq2)
-- [ ] `/accessories/playTones` (Req type oq2)
-- [ ] `/system/sources` (Req type oq2)
-- [ ] `/system/sources/status` (Req type oq2)
-- [ ] `/system/productSettings` (Req type oq2)
-- [ ] `/clock` (Req type oq2)
-- [ ] `/system/reset` (Req type oq2)
-- [ ] `/bluetooth/sink/pairable` (Req type oq2)
-- [ ] `/bluetooth/sink/status` (Req type oq2)
-- [ ] `/system/update/status` (Req type oq2)
-- [ ] `/system/update/start` (Req type oq2)
-- [ ] `/bluetooth/sink/list` (Req type oq2)
-- [ ] `/bluetooth/sink/connect` (Req type oq2)
-- [ ] `/bluetooth/sink/disconnect` (Req type oq2)
-- [ ] `/bluetooth/sink/connectionStatus` (Req type oq2)
-- [ ] `/bluetooth/sink/remove` (Req type oq2)
-- [ ] `/system/activated` (Req type oq2)
-- [ ] `/system/challenge` (Req type oq2)
-- [ ] `/system/setup` (Req type oq2)
-- [ ] `/adaptiq` (Req type oq2)
-- [ ] `/network/status` (Req type oq2)
-- [ ] `/network/wifi/status` (Req type oq2)
-- [ ] `/bluetooth/sink/macAddr` (Req type oq2)
-- [ ] `/remote/integration` (Req type oq2)
-- [ ] `/remote/integration/brandList` (Req type oq2)
-- [ ] `/remote/integration/tvBrand` (Req type oq2)
-- [ ] `/remote/integration/directEntry` (Req type oq2)
-- [ ] `/remote` (Req type oq2)
-- [ ] `/voice/settings` (Req type oq2)
-- [ ] `/voice/setup/start` (Req type oq2)
-- [ ] `/cec` (Req type oq2)
-- [ ] `/content/nowPlaying/shuffle` (Req type oq2)
-- [ ] `/content/nowPlaying/repeat` (Req type oq2)
-- [ ] `/content/nowPlaying/rating` (Req type oq2)
-- [ ] `/content/nowPlaying/favorite` (Req type oq2)
-- [ ] `/subscription` (Req type oq2)
-- [ ] `/audio/dualMonoSelect` (Req type oq2)
-- [ ] `/audio/avSync` (Req type oq2)
-- [ ] `/audio/rebroadcastLatency/mode` (Req type oq2)
-- [ ] `/audio/mountOrientation` (Req type oq2)
-- [ ] `/audio/eqSelect` (Req type oq2)
-- [ ] `/system/power/timeouts` (Req type oq2)
-- [ ] `/system/power/macro` (Req type oq2)
-- [ ] `/system/power/mode/opticalAutoWake` (Req type oq2)
-- [ ] `/audio/bass` (Req type oq2)
-- [ ] `/audio/height` (Req type oq2)
-- [ ] `/audio/format` (Req type oq2)
-- [ ] `/audio/treble` (Req type oq2)
-- [ ] `/audio/center` (Req type oq2)
-- [ ] `/audio/surround` (Req type oq2)
-- [ ] `/audio/subwooferGain` (Req type oq2)
-- [ ] `/ui/lcd/brightness` (Req type oq2)
-- [ ] `/audio/mode` (Req type oq2)
-- [ ] `/system/battery` (Req type oq2)
-- [ ] `/bluetooth/source/list` (Req type oq2)
-- [ ] `/bluetooth/source/status` (Req type oq2)
-- [ ] `/bluetooth/source/pair` (Req type oq2)
-- [ ] `/bluetooth/source/pairStatus` (Req type oq2)
-- [ ] `/bluetooth/source/connect` (Req type oq2)
-- [ ] `/bluetooth/source/scan` (Req type oq2)
-- [ ] `/bluetooth/source/scanResult` (Req type oq2)
-- [ ] `/bluetooth/source/stopScan` (Req type oq2)
-- [ ] `/bluetooth/source/connectionStatus` (Req type oq2)
-- [ ] `/bluetooth/source/disconnect` (Req type oq2)
-- [ ] `/bluetooth/source/remove` (Req type oq2)
-- [ ] `/bluetooth/source/volume` (Req type oq2)
-- [ ] `/ui/ttsPrompt/supportedLanguages` (Req type oq2)
-- [ ] `/device/configuredDevices` (Req type oq2)
-- [ ] `/device/configure` (Req type oq2)
-- [ ] `/device/setup` (Req type oq2)
-- [ ] `/device/assumed/TVs` (Req type oq2)
-- [ ] `/device/assumed/sources` (Req type oq2)
-- [ ] `/cast/setup` (Req type oq2)
-- [ ] `/cast/settings` (Req type oq2)
-- [ ] `/cast/teardown` (Req type oq2)
+- [ ] `/accessories`
+- [ ] `/accessories/playTones`
+- [ ] `/system/sources`
+- [ ] `/system/sources/status`
+- [ ] `/system/productSettings`
+- [ ] `/clock`
+- [ ] `/system/reset`
+- [ ] `/bluetooth/sink/pairable`
+- [ ] `/bluetooth/sink/status`
+- [ ] `/system/update/status`
+- [ ] `/system/update/start`
+- [ ] `/bluetooth/sink/list`
+- [ ] `/bluetooth/sink/connect`
+- [ ] `/bluetooth/sink/disconnect`
+- [ ] `/bluetooth/sink/connectionStatus`
+- [ ] `/bluetooth/sink/remove`
+- [ ] `/system/activated`
+- [ ] `/system/challenge`
+- [ ] `/system/setup`
+- [ ] `/adaptiq`
+- [ ] `/network/status`
+- [ ] `/network/wifi/status`
+- [ ] `/bluetooth/sink/macAddr`
+- [ ] `/remote/integration`
+- [ ] `/remote/integration/brandList`
+- [ ] `/remote/integration/tvBrand`
+- [ ] `/remote/integration/directEntry`
+- [ ] `/remote`
+- [ ] `/voice/settings`
+- [ ] `/voice/setup/start`
+- [ ] `/cec`
+- [ ] `/content/nowPlaying/shuffle`
+- [ ] `/content/nowPlaying/repeat`
+- [ ] `/content/nowPlaying/rating`
+- [ ] `/content/nowPlaying/favorite`
+- [ ] `/subscription`
+- [ ] `/audio/dualMonoSelect`
+- [ ] `/audio/avSync`
+- [ ] `/audio/rebroadcastLatency/mode`
+- [ ] `/audio/mountOrientation`
+- [ ] `/audio/eqSelect`
+- [ ] `/system/power/timeouts`
+- [ ] `/system/power/macro`
+- [ ] `/system/power/mode/opticalAutoWake`
+- [ ] `/audio/bass`
+- [ ] `/audio/height`
+- [ ] `/audio/format`
+- [ ] `/audio/treble`
+- [ ] `/audio/center`
+- [ ] `/audio/surround`
+- [ ] `/audio/subwooferGain`
+- [ ] `/ui/lcd/brightness`
+- [ ] `/audio/mode`
+- [ ] `/system/battery`
+- [ ] `/bluetooth/source/list`
+- [ ] `/bluetooth/source/status`
+- [ ] `/bluetooth/source/pair`
+- [ ] `/bluetooth/source/pairStatus`
+- [ ] `/bluetooth/source/connect`
+- [ ] `/bluetooth/source/scan`
+- [ ] `/bluetooth/source/scanResult`
+- [ ] `/bluetooth/source/stopScan`
+- [ ] `/bluetooth/source/connectionStatus`
+- [ ] `/bluetooth/source/disconnect`
+- [ ] `/bluetooth/source/remove`
+- [ ] `/bluetooth/source/volume`
+- [ ] `/ui/ttsPrompt/supportedLanguages`
+- [ ] `/device/configuredDevices`
+- [ ] `/device/configure`
+- [ ] `/device/setup`
+- [ ] `/device/assumed/TVs`
+- [ ] `/device/assumed/sources`
+- [ ] `/cast/setup`
+- [ ] `/cast/settings`
+- [ ] `/cast/teardown`

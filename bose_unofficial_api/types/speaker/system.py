@@ -1,7 +1,7 @@
 from typing import TypedDict
 
 
-class SpeakerSystemInfo(TypedDict):
+class GetSystemInfo(TypedDict):
     countryCode: str
     defaultName: str
     guid: str
