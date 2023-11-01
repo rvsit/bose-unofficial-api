@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import TypedDict
 
 
@@ -15,3 +16,12 @@ class GetSystemInfo(TypedDict):
     serialNumber: str
     softwareVersion: str
     variantId: int
+
+
+class SystemPowerState(str, Enum):
+    OFF = "OFF"
+    ON = "ON"
+
+
+class GetSystemPowerControl(TypedDict):
+    power: SystemPowerState  # "OFF" or "ON"

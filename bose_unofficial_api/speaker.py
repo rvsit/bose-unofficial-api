@@ -1,7 +1,11 @@
 from connection import BoseWebsocketConnection
 
 from bose_unofficial_api.types.speaker.content import GetContentNowPlaying
-from bose_unofficial_api.types.speaker.system import GetSystemInfo
+from bose_unofficial_api.types.speaker.system import (
+    GetSystemInfo,
+    GetSystemPowerControl,
+    SystemPowerState,
+)
 
 
 class BoseSpeaker:
@@ -21,22 +25,17 @@ class BoseSpeaker:
         return instance
 
     async def load_device_info(self) -> GetSystemInfo:
-        response = await self.connection.send_and_wait("GET", "/system/info")
+        body = await self.connection.send_and_get_body("GET", "/system/info")
+        self.connection.device_guid = body["guid"]
+        return body
 
-        if response["header"]["status"] != 200:
-            raise Exception(
-                f"Received status code {response['header']['status']} when loading device info: {response}"
-            )
+    async def get_system_power_control(self) -> GetSystemPowerControl:
+        return await self.connection.send_and_get_body("GET", "/system/power/control")
 
-        self.connection.device_guid = response["body"]["guid"]
-        return response["body"]
+    async def set_system_power_control(self, power: SystemPowerState) -> None:
+        await self.connection.send_and_get_body(
+            "POST", "/system/power/control", {"power": power}
+        )
 
     async def get_now_playing(self) -> GetContentNowPlaying:
-        response = await self.connection.send_and_wait("GET", "/content/nowPlaying")
-
-        if response["header"]["status"] != 200:
-            raise Exception(
-                f"Received status code {response['header']['status']} when loading now playing: {response}"
-            )
-
-        return response["body"]
+        return await self.connection.send_and_get_body("GET", "/content/nowPlaying")

@@ -100,6 +100,16 @@ class BoseWebsocketConnection:
         future = self.pending_requests[reqID]
         return await future
 
+    async def send_and_get_body(self, method: str, resource: str, body=None):
+        response = await self.send_and_wait(method, resource, body)
+
+        if response["header"]["status"] != 200:
+            raise Exception(
+                f"Received status code {response['header']['status']} when loading now playing: {response}"
+            )
+
+        return response["body"]
+
     async def receive_message(self):
         message = await self.websocket.recv()
         message = json.loads(message)

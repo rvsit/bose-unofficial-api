@@ -34,7 +34,7 @@ When connected to wifi, the devices will open a secured websocket port on 8082. 
 The following functions are available (checked if implemented):
 
 - [x] `/system/info` (GET request, `load_device_info()`)
-- [ ] `/system/power/control` (GET&POST request, `getSystemPowerControl(), setSystemPowerControl(power: 'ON' | 'OFF')`)
+- [x] `/system/power/control` (GET&POST request, `get_system_power_control(), set_system_power_control(power: 'ON' | 'OFF')`)
 - [x] `/content/nowPlaying` (GET, `get_now_playing()`)
 - [ ] `/content/playbackRequest`
 - [ ] `/homekit/info`
