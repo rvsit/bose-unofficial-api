@@ -6,6 +6,7 @@ from bose_unofficial_api.types.speaker.system import (
     GetSystemPowerControl,
     SystemPowerState,
 )
+from bose_unofficial_api.types.speaker.audio import GetAudioVolume
 
 
 class BoseSpeaker:
@@ -39,3 +40,6 @@ class BoseSpeaker:
 
     async def get_now_playing(self) -> GetContentNowPlaying:
         return await self.connection.send_and_get_body("GET", "/content/nowPlaying")
+
+    async def get_audio_volume(self) -> GetAudioVolume:
+        return await self.connection.send_and_get_body("GET", "/audio/volume")

@@ -40,7 +40,7 @@ The following functions are available (checked if implemented):
 - [ ] `/homekit/info`
 - [ ] `/cloudSync` (Req type pq2)
 - [ ] `/audio/zone`
-- [ ] `/audio/volume`
+- [x] `/audio/volume` (GET, `get_audio_volume()`)
 - [ ] `/content/transportControl` (Req type pq2)
 - [ ] `/accessories`
 - [ ] `/accessories/playTones`
