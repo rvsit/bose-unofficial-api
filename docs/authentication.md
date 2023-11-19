@@ -36,10 +36,7 @@ First login step is done with https://accounts.us1.gigya.com/accounts.login
 
 Information about that is available here: https://help.sap.com/docs/SAP_CUSTOMER_DATA_CLOUD/8b8d6fffe113457094a17701f63e3d6a/683844d3c4b54104b2201efffdf558e3.html
 
-It then calls:
-
-- https://accounts.us1.gigya.com/accounts.getAccountInfo to get the account UID
-- https://accounts.us1.gigya.com/accounts.getJWT to get a JWT to use for the next step
+It then calls https://accounts.us1.gigya.com/accounts.getJWT to get a JWT to use for the next step
 
 We then transfer over to the bose api's and get the actual JWT we can use
 
