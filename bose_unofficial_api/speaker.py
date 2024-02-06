@@ -1,4 +1,4 @@
-from connection import BoseWebsocketConnection
+from bose_unofficial_api.connection import BoseWebsocketConnection
 
 from bose_unofficial_api.types.speaker.content import GetContentNowPlaying
 from bose_unofficial_api.types.speaker.system import (
@@ -43,3 +43,6 @@ class BoseSpeaker:
 
     async def get_audio_volume(self) -> GetAudioVolume:
         return await self.connection.send_and_get_body("GET", "/audio/volume")
+
+    async def get_audio_format(self) -> GetAudioVolume:
+        return await self.connection.send_and_get_body("GET", "/audio/format")

@@ -34,7 +34,7 @@ def bose_api_login(loginID: str, password: str):
         gigya_uid_signature,
     )
 
-    # print("Bose JWT:", bose_jwt)
+    print("Bose JWT:", bose_jwt)
 
     return bose_jwt
 
