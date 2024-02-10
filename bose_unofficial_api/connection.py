@@ -19,7 +19,7 @@ class BoseWebsocketConnection:
         # uuid is just a random one, seems to change with restart
         self.ws_url = f"wss://{ip_address}:8082?product=unofficial_api:{uuid.uuid4()}"
         self.websocket: websockets.WebSocketClientProtocol = None
-        self.reqID = 1  # Initialize reqID
+        self.req_id = 1  # Initialize reqID
         self.pending_requests: Dict[int, Future] = {}  # To store pending requests
         self.is_running = False
         self.device_guid: str = None
@@ -40,14 +40,14 @@ class BoseWebsocketConnection:
         asyncio.create_task(self.listen_for_messages(connection_ready_future))
 
         if self.log_messages:
-            logging.info(f"Connected to {self.ws_url}, waiting for '/connectionReady'")
+            logging.info("Connected to %s, waiting for '/connectionReady'", self.ws_url)
 
         await connection_ready_future
 
         await self.load_device_info()
 
     async def send_message(self, method: str, resource: str, body=None):
-        self.reqID += 1  # Increment reqID
+        self.req_id += 1  # Increment reqID
         message = {
             "header": {
                 "token": self.jwt_token,
@@ -55,7 +55,7 @@ class BoseWebsocketConnection:
                 "msgtype": "REQUEST",
                 # GET, POST
                 "method": method,
-                "reqID": self.reqID,
+                "reqID": self.req_id,
                 "device": self.device_guid or "",
             },
             "body": body,
@@ -66,12 +66,11 @@ class BoseWebsocketConnection:
             message["header"]["token"] = "***"
 
         if self.log_messages:
-            logging.info(f"Sent: {json.dumps(message)}")
+            logging.info("Sent: %s", json.dumps(message))
 
-        self.pending_requests[
-            self.reqID
-        ] = Future()  # Create a Future object for the response
-        return self.reqID
+        # Create a Future object for the response
+        self.pending_requests[self.req_id] = Future()
+        return self.req_id
 
     async def listen_for_messages(self, connection_ready_future: Future = None):
         while self.is_running:
@@ -81,10 +80,10 @@ class BoseWebsocketConnection:
                 logging.info("Connection closed")
                 break
             header = message.get("header", {})
-            reqID = header.get("reqID", None)
+            req_id = header.get("reqID", None)
 
-            if reqID and reqID in self.pending_requests:
-                future = self.pending_requests.pop(reqID)
+            if req_id and req_id in self.pending_requests:
+                future = self.pending_requests.pop(req_id)
                 future.set_result(message)
             elif header.get("method", None) == "NOTIFY":
                 if (
@@ -93,11 +92,11 @@ class BoseWebsocketConnection:
                 ):
                     connection_ready_future.set_result(True)
             else:
-                logging.warning(f"Received message with unknown reqID: {message}")
+                logging.warning("Received message with unknown reqID: %s", message)
 
     async def send_and_wait(self, method: str, resource: str, body=None):
-        reqID = await self.send_message(method, resource, body)
-        future = self.pending_requests[reqID]
+        req_id = await self.send_message(method, resource, body)
+        future = self.pending_requests[req_id]
         return await future
 
     async def send_and_get_body(self, method: str, resource: str, body=None):
@@ -105,7 +104,7 @@ class BoseWebsocketConnection:
 
         if response["header"]["status"] != 200:
             raise Exception(
-                f"Received status code {response['header']['status']} when loading now playing: {response}"
+                f"Received {response['header']['status']} in send_and_get_body: {response}"
             )
 
         return response["body"]
@@ -118,7 +117,7 @@ class BoseWebsocketConnection:
             message["header"]["token"] = "***"
 
         if self.log_messages:
-            logging.info(f"Received: {json.dumps(message)}")
+            logging.info("Received: %s", json.dumps(message))
 
         return message
 
@@ -126,7 +125,7 @@ class BoseWebsocketConnection:
         self.is_running = False
         if self.websocket:
             if self.log_messages:
-                logging.info(f"Closing connection to {self.ws_url}")
+                logging.info("Closing connection to %s", self.ws_url)
             await self.websocket.close()
 
     async def load_device_info(self):
@@ -134,7 +133,7 @@ class BoseWebsocketConnection:
 
         if response["header"]["status"] != 200:
             raise Exception(
-                f"Received status code {response['header']['status']} when loading device info: {response}"
+                f"Received {response['header']['status']} in load_device_info: {response}"
             )
 
         self.device_guid = response["body"]["guid"]

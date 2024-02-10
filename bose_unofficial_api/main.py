@@ -3,7 +3,7 @@ import asyncio
 import logging
 import os
 
-from speaker import BoseSpeaker
+from bose_unofficial_api.speaker import BoseSpeaker
 
 
 async def main():
@@ -24,10 +24,14 @@ async def main():
     )
 
     # Example of sending a message and waiting for its response
-    nowPlaying = await speaker.get_now_playing()
-    print("Now playing: %s", nowPlaying)
+    now_playing = await speaker.get_now_playing()
+    print("Now playing: %s", now_playing)
 
     await speaker.connection.close()
+
+
+def start():
+    asyncio.run(main())
 
 
 if __name__ == "__main__":
