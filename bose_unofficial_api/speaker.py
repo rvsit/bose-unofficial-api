@@ -1,4 +1,4 @@
-from connection import BoseWebsocketConnection
+from bose_unofficial_api.connection import BoseWebsocketConnection
 
 from bose_unofficial_api.types.speaker.content import GetContentNowPlaying
 from bose_unofficial_api.types.speaker.system import (
