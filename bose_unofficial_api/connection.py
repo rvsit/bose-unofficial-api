@@ -68,9 +68,9 @@ class BoseWebsocketConnection:
         if self.log_messages:
             logging.info("Sent: %s", json.dumps(message))
 
-        self.pending_requests[self.req_id] = (
-            Future()
-        )  # Create a Future object for the response
+        self.pending_requests[
+            self.req_id
+        ] = Future()  # Create a Future object for the response
         return self.req_id
 
     async def listen_for_messages(self, connection_ready_future: Future = None):
