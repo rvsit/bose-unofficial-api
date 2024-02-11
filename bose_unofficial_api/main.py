@@ -1,25 +1,32 @@
 # Example usage
 import asyncio
 import logging
-import os
 
+from bose_unofficial_api import auth
 from bose_unofficial_api.speaker import BoseSpeaker
+from bose_unofficial_api.variables import get_application_variables
 
 
 async def main():
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.WARN)
 
-    ip_address = os.environ.get("BOSE_IP_ADDRESS")
-    jwt_token = os.environ.get("BOSE_JWT_TOKEN")
+    variables = get_application_variables(is_cli=True)
 
-    if not ip_address or not jwt_token:
+    if not variables["ip_address"]:
         raise Exception(
-            "Please set the BOSE_IP_ADDRESS and BOSE_JWT_TOKEN environment variables"
+            "Please set the BOSE_IP_ADDRESS environment variable or the --ip flag"
+        )
+
+    auth.refresh_jwt_if_needed(variables)
+
+    if not variables["jwt_token"]:
+        raise Exception(
+            "Please set the BOSE_JWT_TOKEN environment variable or the --jwt flag"
         )
 
     speaker = await BoseSpeaker.connect(
-        ip_address=ip_address,
-        jwt_token=jwt_token,
+        ip_address=variables["ip_address"],
+        jwt_token=variables["jwt_token"],
         log_messages=True,
     )
 
