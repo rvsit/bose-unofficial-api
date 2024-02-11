@@ -1,12 +1,62 @@
+from datetime import datetime
 import json
 
+import jwt
 import requests
+
+from bose_unofficial_api.variables import ApplicationVariables
 
 GIGYA_API_KEY = "3_7PoVX7ELjlWyppFZFGia1Wf1rNGZv_mqVgtqVmYl3Js-hQxZiFIU8uHxd8G6PyNz"
 BOSE_CLIENT_ID = "67616C617061676F732D70726F642D6D61647269642D696F73"
 
 
-def bose_api_login(login_id: str, password: str):
+def refresh_jwt_if_needed(variables: ApplicationVariables) -> None:
+    """Refresh JWT if needed"""
+
+    jwt_needs_refresh = False
+
+    if variables["jwt_token"]:
+        expiration_in_days = get_jwt_expiration_days_from_now(variables["jwt_token"])
+        print("JWT expiration in days:", expiration_in_days)
+
+        if expiration_in_days < 5:
+            jwt_needs_refresh = True
+    else:
+        jwt_needs_refresh = True
+
+    if jwt_needs_refresh:
+        if variables["username"] and variables["password"]:
+            variables["jwt_token"] = bose_api_login(
+                variables["username"], variables["password"]
+            )
+        else:
+            raise Exception(
+                "JWT token is missing or expired, and no username/password provided"
+            )
+
+
+def get_jwt_expiration_days_from_now(token: str) -> int:
+    """Get JWT expiration days from now"""
+
+    # Decode the token without verification of signature
+    decoded = jwt.decode(token, options={"verify_signature": False})
+
+    # Extract expiration time
+    exp_timestamp = decoded.get("exp")
+
+    # Convert expiration timestamp to datetime
+    exp_datetime = datetime.fromtimestamp(exp_timestamp)
+
+    # Current datetime in UTC
+    now_datetime = datetime.now()
+
+    # Calculate difference in days
+    expiration_in_days = (exp_datetime - now_datetime).days
+
+    return expiration_in_days
+
+
+def bose_api_login(username: str, password: str):
     """Login to Bose API and return token"""
 
     print("Logging in to Bose API...")
@@ -16,7 +66,7 @@ def bose_api_login(login_id: str, password: str):
         gigya_uid_timestamp,
         gigya_uid_signature,
         gigya_token,
-    ) = gigya_account_login(login_id, password)
+    ) = gigya_account_login(username, password)
 
     # print("UID:", gigya_uid)
     # print("UID timestamp:", gigya_uid_timestamp)
@@ -34,7 +84,7 @@ def bose_api_login(login_id: str, password: str):
         gigya_uid_signature,
     )
 
-    print("Bose JWT:", bose_jwt)
+    print("Bose JWT (recommended to save):", bose_jwt)
 
     return bose_jwt
 

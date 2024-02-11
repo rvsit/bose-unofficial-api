@@ -9,6 +9,28 @@ poetry install
 poetry run start
 ```
 
+## Usage
+
+The following parameter are used in the application
+
+- IP Address of the Bose device
+- Username of the Bose App
+- Password of the Bose App
+- JWT Token (session token based on username+password)
+
+Either use username and password or JWT token.
+Both can be provided which would be recommended.
+Not providing a JWT will result in a new login each time the application is started.
+Not providing the username/password will make the application stop working after the token expires (1 year).
+
+Variables can be provided in 3 ways
+
+- Run parameters --ip, --user, --pass, --jwt
+- Environment variables `BOSE_IP_ADDRESS`, `BOSE_USERNAME`, `BOSE_PASSWORD`, `BOSE_JWT_TOKEN`
+- Through a `.env` file in the root of the project (see `.env.example`)
+
+Use `poetry run start` to start the application.
+
 ## Supported devices and functions
 
 This API has been tested with the following devices and functions:
