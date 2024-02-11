@@ -9,28 +9,40 @@ poetry install
 poetry run start
 ```
 
-## Supported devices
+## Supported devices and functions
 
-This API has been tested with the following devices:
+This API has been tested with the following devices and functions:
 
 - Bose Portable Home Speaker (codename: `TAYLOR`)
+  - `load_device_info`
+  - `get_system_power_control`
+  - `set_system_power_control`
+  - `get_now_playing`
+  - `get_audio_volume`
+  - ❌ `get_audio_format`
+- Bose Soundbar 700 (codename: `GINGER_CHEEVERS`)
+  - `load_device_info`
+  - `get_system_power_control`
+  - `set_system_power_control`
+  - `get_now_playing`
+  - `get_audio_volume`
+  - `get_audio_format`
 
 This may work on the following devices (please report if working):
 
 - Bose NC 700 Headphones (codename: `GOODYEAR`)
 - Bose Home Speaker 500 (codename: `EDDIE`)
-- Bose Soundbar 500 (codename: `PROFESSOR`)
-- Bose Soundbar 700 (codename: `GINGER_CHEEVERS`)
+- Bose Smart Soundbar 300 (codename: `SAN_DIEGO`)
+- Bose Smart Soundbar 500 (codename: `PROFESSOR`)
+- Bose Smart Soundbar 550 (codename: `MALCOLM_CLUB`)
+- Bose Smart Soundbar 600 (codename: `MALCOLM`)
+- Bose Smart Soundbar 900 (codename: `ANGUS`)
 - Bose Home Speaker 300 (codename: `FLIPPER`)
 - Bose Home Speaker 450 (codename: `EDDIE_CLUB`)
-- Bose Soundbar 300 (codename: `SAN_DIEGO`)
 - Bose L1 Pro (codename: `FERRARI`)
 - Bose L1 Pro (codename: `LOTUS`)
 - Bose L1 Pro (codename: `MCLAREN`)
-- Bose Smart Soundbar 900 (codename: `ANGUS`)
 - Bose Zakim (codename: `ZAKIM`)
-- Bose Smart Soundbar 600 (codename: `MALCOLM`)
-- Bose Soundbar 550 (codename: `MALCOLM_CLUB`)
 
 ## Workings
 
@@ -43,11 +55,12 @@ The following functions are available (checked if implemented):
 - [x] `/system/info` (GET request, `load_device_info()`)
 - [x] `/system/power/control` (GET&POST request, `get_system_power_control(), set_system_power_control(power: 'ON' | 'OFF')`)
 - [x] `/content/nowPlaying` (GET, `get_now_playing()`)
+- [x] `/audio/volume` (GET, `get_audio_volume()`)
+- [x] `/audio/format` (GET, `get_audio_format()`)
 - [ ] `/content/playbackRequest`
 - [ ] `/homekit/info`
 - [ ] `/cloudSync` (Req type pq2)
 - [ ] `/audio/zone`
-- [x] `/audio/volume` (GET, `get_audio_volume()`)
 - [ ] `/content/transportControl` (Req type pq2)
 - [ ] `/accessories`
 - [ ] `/accessories/playTones`
@@ -95,7 +108,6 @@ The following functions are available (checked if implemented):
 - [ ] `/system/power/mode/opticalAutoWake`
 - [ ] `/audio/bass`
 - [ ] `/audio/height`
-- [ ] `/audio/format`
 - [ ] `/audio/treble`
 - [ ] `/audio/center`
 - [ ] `/audio/surround`
