@@ -6,7 +6,7 @@ GIGYA_API_KEY = "3_7PoVX7ELjlWyppFZFGia1Wf1rNGZv_mqVgtqVmYl3Js-hQxZiFIU8uHxd8G6P
 BOSE_CLIENT_ID = "67616C617061676F732D70726F642D6D61647269642D696F73"
 
 
-def bose_api_login(loginID: str, password: str):
+def bose_api_login(login_id: str, password: str):
     """Login to Bose API and return token"""
 
     print("Logging in to Bose API...")
@@ -16,7 +16,7 @@ def bose_api_login(loginID: str, password: str):
         gigya_uid_timestamp,
         gigya_uid_signature,
         gigya_token,
-    ) = gigya_account_login(loginID, password)
+    ) = gigya_account_login(login_id, password)
 
     # print("UID:", gigya_uid)
     # print("UID timestamp:", gigya_uid_timestamp)
@@ -39,11 +39,11 @@ def bose_api_login(loginID: str, password: str):
     return bose_jwt
 
 
-def gigya_account_login(loginID: str, password: str) -> (str, str):
+def gigya_account_login(login_id: str, password: str) -> (str, str):
     """Login to Bose API and return user_id + session_cookie_value"""
 
     request_body = {
-        "loginID": loginID,
+        "loginID": login_id,
         "password": password,
         "apikey": GIGYA_API_KEY,
         "format": "json",
@@ -64,7 +64,7 @@ def gigya_account_login(loginID: str, password: str) -> (str, str):
     url = "https://accounts.us1.gigya.com/accounts.login"
 
     # Send the request
-    response = requests.post(url, data=request_body, headers=headers)
+    response = requests.post(url, data=request_body, headers=headers, timeout=10)
 
     data = response.json()
 
@@ -107,7 +107,7 @@ def gigya_get_jwt(session_token: str) -> str:
     url = "https://accounts.us1.gigya.com/accounts.getJWT"
 
     # Send the request
-    response = requests.post(url, data=request_body, headers=headers)
+    response = requests.post(url, data=request_body, headers=headers, timeout=10)
 
     # Log response
     data = response.json()
@@ -149,7 +149,7 @@ def bose_get_jwt(
     url = "https://id.api.bose.io/id-jwt-core/token"
 
     # Send the request
-    response = requests.post(url, json=request_body, headers=headers)
+    response = requests.post(url, json=request_body, headers=headers, timeout=10)
 
     # Log response
     data = response.json()

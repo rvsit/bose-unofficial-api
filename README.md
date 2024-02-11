@@ -2,6 +2,13 @@
 
 Work in progress. This is not an official API, nor affiliated with Bose.
 
+## Development setup
+
+```
+poetry install
+poetry run start
+```
+
 ## Supported devices
 
 This API has been tested with the following devices:
