@@ -16,3 +16,9 @@ class GetAudioVolume(TypedDict):
     muted: bool
     properties: AudioProperties
     value: int
+
+
+class GetAudioFormat(TypedDict):
+    channels: str
+    format: str
+    type: str
