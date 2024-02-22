@@ -13,14 +13,14 @@ async def main():
     variables = get_application_variables(is_cli=True)
 
     if not variables["ip_address"]:
-        raise Exception(
+        raise ValueError(
             "Please set the BOSE_IP_ADDRESS environment variable or the --ip flag"
         )
 
     auth.refresh_jwt_if_needed(variables)
 
     if not variables["jwt_token"]:
-        raise Exception(
+        raise ValueError(
             "Please set the BOSE_JWT_TOKEN environment variable or the --jwt flag"
         )
 
@@ -31,7 +31,7 @@ async def main():
     )
 
     # Example of sending a message and waiting for its response
-    now_playing = await speaker.get_now_playing()
+    now_playing = await speaker.api.get_now_playing()
     print("Now playing: %s", now_playing)
 
     await speaker.connection.close()
