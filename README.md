@@ -36,14 +36,15 @@ Use `poetry run start` to start the application.
 This API has been tested with the following devices and functions:
 
 - Bose Portable Home Speaker (codename: `TAYLOR`)
-  - `load_device_info`
+  - `get_system_info`
+  - `get_system_capabilities`
   - `get_system_power_control`
   - `set_system_power_control`
   - `get_now_playing`
   - `get_audio_volume`
   - ❌ `get_audio_format`
 - Bose Soundbar 700 (codename: `GINGER_CHEEVERS`)
-  - `load_device_info`
+  - `get_system_info`
   - `get_system_power_control`
   - `set_system_power_control`
   - `get_now_playing`
@@ -74,7 +75,8 @@ When connected to wifi, the devices will open a secured websocket port on 8082. 
 
 The following functions are available (checked if implemented):
 
-- [x] `/system/info` (GET request, `load_device_info()`)
+- [x] `/system/info` (GET request, `get_system_info()`)
+- [x] `/system/capabilities` (GET request, `get_system_capabilities()`)
 - [x] `/system/power/control` (GET&POST request, `get_system_power_control(), set_system_power_control(power: 'ON' | 'OFF')`)
 - [x] `/content/nowPlaying` (GET, `get_now_playing()`)
 - [x] `/audio/volume` (GET, `get_audio_volume()`)

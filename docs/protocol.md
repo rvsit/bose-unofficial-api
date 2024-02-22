@@ -3,7 +3,7 @@
 ```json
 {
   "header": {
-    "device": "4b6207fd-8206-f470-fdfb-a6b24cef28fd",
+    "device": "<uuid>",
     "resource": "/system/error",
     "method": "NOTIFY",
     "version": 2.0,

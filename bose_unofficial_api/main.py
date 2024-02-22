@@ -31,7 +31,7 @@ async def main():
     )
 
     # Example of sending a message and waiting for its response
-    now_playing = await speaker.get_now_playing()
+    now_playing = await speaker.api.get_now_playing()
     print("Now playing: %s", now_playing)
 
     await speaker.connection.close()

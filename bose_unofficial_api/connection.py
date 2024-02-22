@@ -44,8 +44,6 @@ class BoseWebsocketConnection:
 
         await connection_ready_future
 
-        await self.load_device_info()
-
     async def send_message(self, method: str, resource: str, body=None):
         self.req_id += 1  # Increment reqID
         message = {
@@ -127,13 +125,3 @@ class BoseWebsocketConnection:
             if self.log_messages:
                 logging.info("Closing connection to %s", self.ws_url)
             await self.websocket.close()
-
-    async def load_device_info(self):
-        response = await self.send_and_wait("GET", "/system/info")
-
-        if response["header"]["status"] != 200:
-            raise ValueError(
-                f"Received {response['header']['status']} in load_device_info: {response}"
-            )
-
-        self.device_guid = response["body"]["guid"]
