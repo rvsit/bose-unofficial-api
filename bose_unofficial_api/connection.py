@@ -103,7 +103,7 @@ class BoseWebsocketConnection:
         response = await self.send_and_wait(method, resource, body)
 
         if response["header"]["status"] != 200:
-            raise Exception(
+            raise ValueError(
                 f"Received {response['header']['status']} in send_and_get_body: {response}"
             )
 
@@ -132,7 +132,7 @@ class BoseWebsocketConnection:
         response = await self.send_and_wait("GET", "/system/info")
 
         if response["header"]["status"] != 200:
-            raise Exception(
+            raise ValueError(
                 f"Received {response['header']['status']} in load_device_info: {response}"
             )
 

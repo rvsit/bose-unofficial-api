@@ -13,14 +13,14 @@ async def main():
     variables = get_application_variables(is_cli=True)
 
     if not variables["ip_address"]:
-        raise Exception(
+        raise ValueError(
             "Please set the BOSE_IP_ADDRESS environment variable or the --ip flag"
         )
 
     auth.refresh_jwt_if_needed(variables)
 
     if not variables["jwt_token"]:
-        raise Exception(
+        raise ValueError(
             "Please set the BOSE_JWT_TOKEN environment variable or the --jwt flag"
         )
 
