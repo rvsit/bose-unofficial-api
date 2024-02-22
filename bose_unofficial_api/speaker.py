@@ -23,3 +23,6 @@ class BoseSpeaker:
         instance.connection.device_guid = system_info["guid"]
 
         return instance
+
+    async def close(self):
+        await self.connection.close()
