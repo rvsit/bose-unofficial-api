@@ -1,6 +1,7 @@
 from bose_unofficial_api.connection import BoseWebsocketConnection
 from bose_unofficial_api.types.speaker.audio import GetAudioFormat, GetAudioVolume
 from bose_unofficial_api.types.speaker.content import GetContentNowPlaying
+from bose_unofficial_api.types.speaker.subscription import NotificationItem
 from bose_unofficial_api.types.speaker.system import (
     GetSystemInfo,
     GetSystemPowerControl,
@@ -37,3 +38,8 @@ class BoseConnectionApi:
 
     async def get_audio_format(self) -> GetAudioFormat:
         return await self.connection.send_and_get_body("GET", "/audio/format")
+
+    async def put_subscription(self, notifications: list[NotificationItem]) -> None:
+        return await self.connection.send_and_get_body(
+            "PUT", "/subscription", {"notifications": notifications}
+        )

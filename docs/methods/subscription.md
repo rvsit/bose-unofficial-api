@@ -251,24 +251,108 @@ Body example:
 
 Responds with the same notifications list.
 
-## Example "Notification"
+## Example "Notifications"
+
+Seen variants:
+
+`/system/battery`
 
 ```json
 {
-  "header": {
-    "device": "<uuid>",
-    "resource": "/system/battery",
-    "method": "NOTIFY",
-    "version": 1.0
+  "chargeStatus": "DISCHARGING",
+  "chargerConnected": "CONNECTED",
+  "minutesToEmpty": 65535,
+  "minutesToFull": 65535,
+  "percent": 100,
+  "sufficientChargerConnected": true,
+  "temperatureState": "NORMAL"
+}
+```
+
+`/network/wifi/status`
+
+```json
+{
+  "frequencyKhz": 5220000,
+  "signalDbm": -46,
+  "signalDbmLevel": "WIFI_SIGNAL_DBM_LEVEL_EXCELLENT",
+  "ssid": "<REDACTED>",
+  "state": "WIFI_STATION_CONNECTED"
+}
+```
+
+`/system/power/control`
+
+```json
+{
+  "power": "ON"
+}
+```
+
+`/content/nowPlaying`
+
+```json
+{
+  "collectData": true,
+  "container": {
+    "capabilities": {
+      "favoriteSupported": true,
+      "ratingsSupported": false,
+      "repeatSupported": false,
+      "resumeSupported": true,
+      "seekRelativeBackwardSupported": false,
+      "seekRelativeForwardSupported": false,
+      "shuffleSupported": false,
+      "skipNextSupported": false,
+      "skipPreviousSupported": false
+    },
+    "contentItem": {
+      "containerArt": "http://cdn-radiotime-logos.tunein.com/s9483g.png",
+      "isLocal": true,
+      "location": "/playback/station/s9483",
+      "name": "NPO Radio 2",
+      "presetable": true,
+      "source": "TUNEIN",
+      "sourceAccount": "<UUID>",
+      "type": "stationurl"
+    }
   },
-  "body": {
-    "chargeStatus": "DISCHARGING",
-    "chargerConnected": "CONNECTED",
-    "minutesToEmpty": 65535,
-    "minutesToFull": 65535,
-    "percent": 100,
-    "sufficientChargerConnected": true,
-    "temperatureState": "NORMAL"
+  "initiatorID": "",
+  "links": { "moreInfo": "/more_info/np/s9483" },
+  "metadata": {
+    "album": "",
+    "artist": "Er is maar één NPO Radio 2",
+    "containerName": "NPO Radio 2",
+    "trackName": "NPO Radio 2"
+  },
+  "source": { "sourceDisplayName": "TuneIn", "sourceID": "TUNEIN" },
+  "state": {
+    "canFavorite": true,
+    "canPause": false,
+    "canRate": false,
+    "canRepeat": false,
+    "canSeek": false,
+    "canShuffle": false,
+    "canSkipNext": false,
+    "canSkipPrevious": false,
+    "canStop": true,
+    "quality": "NOT_SET",
+    "repeat": "OFF",
+    "shuffle": "OFF",
+    "status": "PLAY",
+    "timestamp": "2024-02-24T22:09:16-0500"
+  },
+  "track": {
+    "contentItem": {
+      "containerArt": "http://cdn-radiotime-logos.tunein.com/s9483g.png",
+      "isLocal": true,
+      "name": "NPO Radio 2",
+      "presetable": false,
+      "source": "TUNEIN",
+      "sourceAccount": "<UUID>"
+    },
+    "favorite": "NO",
+    "rating": "UNRATED"
   }
 }
 ```
