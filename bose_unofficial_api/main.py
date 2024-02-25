@@ -8,7 +8,7 @@ from bose_unofficial_api.variables import get_application_variables
 
 
 async def main():
-    logging.basicConfig(level=logging.WARN)
+    logging.basicConfig(level=logging.INFO)
 
     variables = get_application_variables(is_cli=True)
 
@@ -33,6 +33,9 @@ async def main():
     # Example of sending a message and waiting for its response
     now_playing = await speaker.api.get_now_playing()
     print("Now playing: %s", now_playing)
+
+    # Await future to sleep 500s
+    await asyncio.sleep(500)
 
     await speaker.connection.close()
 

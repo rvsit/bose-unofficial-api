@@ -4,7 +4,7 @@ import logging
 import ssl
 import uuid
 from asyncio import Future
-from typing import Dict
+from typing import Dict, Optional
 
 import websockets
 
@@ -22,7 +22,7 @@ class BoseWebsocketConnection:
         self.req_id = 1  # Initialize reqID
         self.pending_requests: Dict[int, Future] = {}  # To store pending requests
         self.is_running = False
-        self.device_guid: str = None
+        self.device_guid: Optional[str] = None
 
     async def connect(self) -> None:
         ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
@@ -64,7 +64,7 @@ class BoseWebsocketConnection:
             message["header"]["token"] = "***"
 
         if self.log_messages:
-            logging.info("Sent: %s", json.dumps(message))
+            logging.debug("Sent: %s", json.dumps(message))
 
         # Create a Future object for the response
         self.pending_requests[self.req_id] = Future()
@@ -84,6 +84,7 @@ class BoseWebsocketConnection:
                 future = self.pending_requests.pop(req_id)
                 future.set_result(message)
             elif header.get("method", None) == "NOTIFY":
+                logging.info("Received NOTIFY message: %s", message.get("body", {}))
                 if (
                     header.get("resource", None) == "/connectionReady"
                     and connection_ready_future
@@ -115,7 +116,7 @@ class BoseWebsocketConnection:
             message["header"]["token"] = "***"
 
         if self.log_messages:
-            logging.info("Received: %s", json.dumps(message))
+            logging.debug("Received: %s", json.dumps(message))
 
         return message
 
