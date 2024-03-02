@@ -23,7 +23,7 @@ class BoseWebsocketConnection:
         self.pending_requests: Dict[int, Future] = {}  # To store pending requests
         self.is_running = False
         self.device_guid: Optional[str] = None
-        self.buffet: Dict[int, Future] = {}  # To store pending requests
+        self.buffet: Dict[str, Future] = {}  # To store NOTIFY's on subscription
 
     async def connect(self) -> None:
         ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
@@ -95,24 +95,29 @@ class BoseWebsocketConnection:
                 future = self.pending_requests.pop(req_id)
                 future.set_result(message)
             elif header.get("method", None) == "NOTIFY":
+                resource = header.get("resource", None)
+                body = message.get("body", {})
                 logging.info(
                     'Received NOTIFY message "%s": %s',
-                    header.get("resource", None),
-                    message.get("body", {}),
+                    resource,
+                    body,
                 )                
                 if (
-                    header.get("resource", None) == "/connectionReady"
+                    resource == "/connectionReady"
                     and connection_ready_future
                 ):
                     connection_ready_future.set_result(True)
                 else:
-                    self.buffet[self.req_id] = Future()
-                    self.buffet[self.req_id].set_result(message)
+                    self.buffet[resource] = Future()
+                    self.buffet[resource].set_result(body)
             else:
                 logging.warning("Received message with unknown reqID: %s", message)
 
-    async def serve_buffet(self):     
-        return await self.buffet
+    async def serve_buffet(self):
+        return self.buffet
+
+    async def clear_buffet(self):
+        self.buffet.clear()
 
     async def send_and_wait(self, method: str, resource: str, version=1, body=None):
         req_id = await self.send_message(method, resource, version, body)
