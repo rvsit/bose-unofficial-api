@@ -1,12 +1,8 @@
+from typing import Optional
+from bose_unofficial_api.capabilities import SpeakerCapabilities
 from bose_unofficial_api.connection import BoseWebsocketConnection
-
-from bose_unofficial_api.types.speaker.content import GetContentNowPlaying
-from bose_unofficial_api.types.speaker.system import (
-    GetSystemInfo,
-    GetSystemPowerControl,
-    SystemPowerState,
-)
-from bose_unofficial_api.types.speaker.audio import GetAudioVolume
+from bose_unofficial_api.api import BoseConnectionApi
+from bose_unofficial_api.types.speaker import subscription
 
 
 class BoseSpeaker:
@@ -14,6 +10,8 @@ class BoseSpeaker:
         self.connection = BoseWebsocketConnection(
             ip_address=ip_address, jwt_token=jwt_token, log_messages=log_messages
         )
+        self.api = BoseConnectionApi(connection=self.connection)
+        self.capabilities: Optional[SpeakerCapabilities] = None
 
     @staticmethod
     async def connect(
@@ -23,26 +21,21 @@ class BoseSpeaker:
             ip_address=ip_address, jwt_token=jwt_token, log_messages=log_messages
         )
         await instance.connection.connect()
+
+        # We are setting the device GUID here because future requests expect it
+        system_info = await instance.api.get_system_info()
+        instance.connection.device_guid = system_info["guid"]
+
+        # Get the capabilities of the speaker
+        raw_capabilities = await instance.api.get_system_capabilities()
+        instance.capabilities = SpeakerCapabilities(raw_response=raw_capabilities)
+
+        await instance.create_subscription()
+
         return instance
 
-    async def load_device_info(self) -> GetSystemInfo:
-        body = await self.connection.send_and_get_body("GET", "/system/info")
-        self.connection.device_guid = body["guid"]
-        return body
+    async def close(self):
+        await self.connection.close()
 
-    async def get_system_power_control(self) -> GetSystemPowerControl:
-        return await self.connection.send_and_get_body("GET", "/system/power/control")
-
-    async def set_system_power_control(self, power: SystemPowerState) -> None:
-        await self.connection.send_and_get_body(
-            "POST", "/system/power/control", {"power": power}
-        )
-
-    async def get_now_playing(self) -> GetContentNowPlaying:
-        return await self.connection.send_and_get_body("GET", "/content/nowPlaying")
-
-    async def get_audio_volume(self) -> GetAudioVolume:
-        return await self.connection.send_and_get_body("GET", "/audio/volume")
-
-    async def get_audio_format(self) -> GetAudioVolume:
-        return await self.connection.send_and_get_body("GET", "/audio/format")
+    async def create_subscription(self, notifications=subscription.DEFAULT_SUBSCRIPTION_BODY):
+        return await self.api.put_subscription(notifications)
