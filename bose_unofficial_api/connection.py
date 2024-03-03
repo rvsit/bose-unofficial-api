@@ -101,7 +101,7 @@ class BoseWebsocketConnection:
                     'Received NOTIFY message "%s": %s',
                     resource,
                     body,
-                )                
+                )
                 if (
                     resource == "/connectionReady"
                     and connection_ready_future
