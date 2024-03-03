@@ -12,7 +12,7 @@ requests = "^2.31.0"
 pyjwt = "^2.8.0"
 
 [tool.poetry.group.dev.dependencies]
-pylint = "^3.0.3"
+pylint = "^3.1.0"
 ruff = "^0.2.2"
 
 [build-system]
