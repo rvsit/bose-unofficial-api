@@ -2,28 +2,70 @@
 
 Work in progress. This is not an official API, nor affiliated with Bose.
 
-## Supported devices
+## Development setup
 
-This API has been tested with the following devices:
+```
+poetry install
+poetry run start
+```
+
+## Usage
+
+The following parameter are used in the application
+
+- IP Address of the Bose device
+- Username of the Bose App
+- Password of the Bose App
+- JWT Token (session token based on username+password)
+
+Either use username and password or JWT token.
+Both can be provided which would be recommended.
+Not providing a JWT will result in a new login each time the application is started.
+Not providing the username/password will make the application stop working after the token expires (1 year).
+
+Variables can be provided in 3 ways
+
+- Run parameters --ip, --user, --pass, --jwt
+- Environment variables `BOSE_IP_ADDRESS`, `BOSE_USERNAME`, `BOSE_PASSWORD`, `BOSE_JWT_TOKEN`
+- Through a `.env` file in the root of the project (see `.env.example`)
+
+Use `poetry run start` to start the application.
+
+## Supported devices and functions
+
+This API has been tested with the following devices and functions:
 
 - Bose Portable Home Speaker (codename: `TAYLOR`)
+  - `get_system_info`
+  - `get_system_capabilities`
+  - `get_system_power_control`
+  - `set_system_power_control`
+  - `get_now_playing`
+  - `get_audio_volume`
+  - ❌ `get_audio_format`
+- Bose Soundbar 700 (codename: `GINGER_CHEEVERS`)
+  - `get_system_info`
+  - `get_system_power_control`
+  - `set_system_power_control`
+  - `get_now_playing`
+  - `get_audio_volume`
+  - `get_audio_format`
 
 This may work on the following devices (please report if working):
 
 - Bose NC 700 Headphones (codename: `GOODYEAR`)
 - Bose Home Speaker 500 (codename: `EDDIE`)
-- Bose Soundbar 500 (codename: `PROFESSOR`)
-- Bose Soundbar 700 (codename: `GINGER_CHEEVERS`)
+- Bose Smart Soundbar 300 (codename: `SAN_DIEGO`)
+- Bose Smart Soundbar 500 (codename: `PROFESSOR`)
+- Bose Smart Soundbar 550 (codename: `MALCOLM_CLUB`)
+- Bose Smart Soundbar 600 (codename: `MALCOLM`)
+- Bose Smart Soundbar 900 (codename: `ANGUS`)
 - Bose Home Speaker 300 (codename: `FLIPPER`)
 - Bose Home Speaker 450 (codename: `EDDIE_CLUB`)
-- Bose Soundbar 300 (codename: `SAN_DIEGO`)
 - Bose L1 Pro (codename: `FERRARI`)
 - Bose L1 Pro (codename: `LOTUS`)
 - Bose L1 Pro (codename: `MCLAREN`)
-- Bose Smart Soundbar 900 (codename: `ANGUS`)
 - Bose Zakim (codename: `ZAKIM`)
-- Bose Smart Soundbar 600 (codename: `MALCOLM`)
-- Bose Soundbar 550 (codename: `MALCOLM_CLUB`)
 
 ## Workings
 
@@ -33,14 +75,16 @@ When connected to wifi, the devices will open a secured websocket port on 8082. 
 
 The following functions are available (checked if implemented):
 
-- [x] `/system/info` (GET request, `load_device_info()`)
+- [x] `/system/info` (GET request, `get_system_info()`)
+- [x] `/system/capabilities` (GET request, `get_system_capabilities()`)
 - [x] `/system/power/control` (GET&POST request, `get_system_power_control(), set_system_power_control(power: 'ON' | 'OFF')`)
 - [x] `/content/nowPlaying` (GET, `get_now_playing()`)
+- [x] `/audio/volume` (GET, `get_audio_volume()`)
+- [x] `/audio/format` (GET, `get_audio_format()`)
 - [ ] `/content/playbackRequest`
 - [ ] `/homekit/info`
 - [ ] `/cloudSync` (Req type pq2)
 - [ ] `/audio/zone`
-- [x] `/audio/volume` (GET, `get_audio_volume()`)
 - [ ] `/content/transportControl` (Req type pq2)
 - [ ] `/accessories`
 - [ ] `/accessories/playTones`
@@ -88,7 +132,6 @@ The following functions are available (checked if implemented):
 - [ ] `/system/power/mode/opticalAutoWake`
 - [ ] `/audio/bass`
 - [ ] `/audio/height`
-- [ ] `/audio/format`
 - [ ] `/audio/treble`
 - [ ] `/audio/center`
 - [ ] `/audio/surround`

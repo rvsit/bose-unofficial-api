@@ -1,9 +1,9 @@
 from bose_unofficial_api.connection import BoseWebsocketConnection
 from bose_unofficial_api.types.speaker.audio import (
-    GetAudioFormat, 
+    GetAudioFormat,
     GetAudioVolume,
     GetAudioMode,
-    GetAudioSurround,    
+    GetAudioSurround,
 )
 from bose_unofficial_api.types.speaker.content import GetContentNowPlaying
 from bose_unofficial_api.types.speaker.subscription import NotificationItem
@@ -12,7 +12,7 @@ from bose_unofficial_api.types.speaker.system import (
     GetSystemPowerControl,
     SystemPowerState,
     GetWiFiStatus,
-    GetRemote,    
+    GetRemote,
 )
 from bose_unofficial_api.types.speaker.system_capabilities import (
     GetSystemCapabilities,
@@ -50,10 +50,10 @@ class BoseConnectionApi:
         return await self.connection.send_and_get_body(
             "PUT", "/subscription", 2, {"notifications": notifications}
         )
-        
+
     async def get_remote(self) -> GetRemote:
         return await self.connection.send_and_get_body("GET", "/remote")
-    
+
     async def get_audio_mode(self) -> GetAudioMode:
         return await self.connection.send_and_get_body("GET", "/audio/mode")
 
