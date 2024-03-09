@@ -97,11 +97,12 @@ class BoseWebsocketConnection:
             elif header.get("method", None) == "NOTIFY":
                 resource = header.get("resource", None)
                 body = message.get("body", {})
-                logging.info(
-                    'Received NOTIFY message "%s": %s',
-                    resource,
-                    body,
-                )                
+                if self.log_messages:
+                    logging.info(
+                        'Received NOTIFY message "%s": %s',
+                        resource,
+                        body,
+                    )
                 if (
                     resource == "/connectionReady"
                     and connection_ready_future
