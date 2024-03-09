@@ -39,3 +39,21 @@ class BoseSpeaker:
 
     async def create_subscription(self, notifications=subscription.DEFAULT_SUBSCRIPTION_BODY):
         return await self.api.put_subscription(notifications)
+
+    async def create_subscription_by_group(self, apiGroups):
+        capabilities = self.capabilities.get_groups()
+        # Extracting "apiGroup" keys with their respective value and index
+        all_api_groups = [(index, item["apiGroup"]) for index, item in enumerate(capabilities)]
+
+        # Printing the result
+        notifications=[]
+        for index, api_group in all_api_groups:
+            #print(f"Index: {index}, apiGroup: {api_group}")
+            if api_group in apiGroups:
+                for resource in range(1, len(capabilities[index]['endpoints'])):
+                    endpoint = capabilities[index]['endpoints'][resource]['endpoint']
+                    version=int(capabilities[index]['version'])
+                    #print(endpoint)
+                    notifications.append({'version': version, 'resource': endpoint})                
+                
+        return await self.api.put_subscription(notifications)
