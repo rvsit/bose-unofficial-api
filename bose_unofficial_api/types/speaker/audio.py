@@ -25,31 +25,37 @@ class GetAudioFormat(TypedDict):
     type: str
 
 
-class supportedPersistence(str, Enum):
+class SupportedPersistence(str, Enum):
     SESSION = "SESSION"
     GLOBAL = "GLOBAL"
     CONTENT_ITEM = "CONTENT_ITEM"
 
 
-class GetsupportedPersistence(TypedDict):
-    supportedPersistence: supportedPersistence
+class SupportedSurroundValues(str, Enum):
+    DIALOG = "DIALOG"
+    NORMAL = "NORMAL"
 
 
-class GetAudioMode(TypedDict):
-    persistence: supportedPersistence
-    properties: object
-    supportedValues: object
-    value: supportedPersistence
-
-
-class SurroundProperties(TypedDict):
-    supportedPersistence: supportedPersistence
+class AudioModeProperties(TypedDict):
+    # list of supportedPersistence options
+    supportedPersistence: list[SupportedPersistence]
     max: int
     min: int
     step: int
 
 
-class GetAudioSurround(TypedDict):
-    persistence: supportedPersistence
-    properties: SurroundProperties
+class GetAudioMode(TypedDict):
+    persistence: SupportedPersistence
+    properties: AudioModeProperties
     value: int
+
+
+class SurroundProperties(TypedDict):
+    supportedPersistence: list[SupportedPersistence]
+    supportedValues: list[SupportedSurroundValues]
+
+
+class GetAudioSurround(TypedDict):
+    persistence: SupportedPersistence
+    properties: SurroundProperties
+    value: SupportedSurroundValues
