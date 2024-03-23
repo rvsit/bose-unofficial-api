@@ -1,7 +1,8 @@
 from typing import Optional
+
+from bose_unofficial_api.api import BoseConnectionApi
 from bose_unofficial_api.capabilities import SpeakerCapabilities
 from bose_unofficial_api.connection import BoseWebsocketConnection
-from bose_unofficial_api.api import BoseConnectionApi
 from bose_unofficial_api.types.speaker import subscription
 
 
@@ -37,5 +38,27 @@ class BoseSpeaker:
     async def close(self):
         await self.connection.close()
 
-    async def create_subscription(self):
-        return await self.api.put_subscription(subscription.DEFAULT_SUBSCRIPTION_BODY)
+    async def create_subscription(self, notifications=None):
+        if notifications is None:
+            notifications = subscription.DEFAULT_SUBSCRIPTION_BODY
+        return await self.api.put_subscription(notifications)
+
+    async def create_subscription_by_group(self, api_groups):
+        capabilities = self.capabilities.get_groups()
+        # Extracting "apiGroup" keys with their respective value and index
+        all_api_groups = [
+            (index, item["apiGroup"]) for index, item in enumerate(capabilities)
+        ]
+
+        # Printing the result
+        notifications = []
+        for index, api_group in all_api_groups:
+            # print(f"Index: {index}, apiGroup: {api_group}")
+            if api_group in api_groups:
+                for resource in range(1, len(capabilities[index]["endpoints"])):
+                    endpoint = capabilities[index]["endpoints"][resource]["endpoint"]
+                    version = int(capabilities[index]["version"])
+                    # print(endpoint)
+                    notifications.append({"version": version, "resource": endpoint})
+
+        return await self.api.put_subscription(notifications)

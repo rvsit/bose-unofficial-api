@@ -1,8 +1,10 @@
-from datetime import datetime
 import json
+from datetime import datetime
 from typing import Tuple
+
 import jwt
 import requests
+
 from bose_unofficial_api.variables import ApplicationVariables
 
 GIGYA_API_KEY = "3_7PoVX7ELjlWyppFZFGia1Wf1rNGZv_mqVgtqVmYl3Js-hQxZiFIU8uHxd8G6PyNz"
