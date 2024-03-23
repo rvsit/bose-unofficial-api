@@ -77,14 +77,15 @@ class BoseWebsocketConnection:
             try:
                 message = await self.receive_message()
             except websockets.exceptions.ConnectionClosedOK:
+                # Requested by client so no error needs to be thrown
                 logging.info("Connection closed")
-                exit(-1)
-            except websockets.exceptions.ConnectionClosedError:
+            except websockets.exceptions.ConnectionClosedError as e:
                 logging.warning("Connection closed error")
-                exit(-2)
-            except:
-                logging.warning("Connection error")
-                exit(-3)
+                raise e
+            except websockets.exceptions.WebSocketException as e:
+                logging.error("Websocket exception: %s", e)
+                raise e
+
             header = message.get("header", {})
             req_id = header.get("reqID", None)
 
