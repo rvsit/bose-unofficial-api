@@ -25,18 +25,3 @@ class SystemPowerState(str, Enum):
 
 class GetSystemPowerControl(TypedDict):
     power: SystemPowerState  # "OFF" or "ON"
-
-
-class GetWiFiStatus(TypedDict, total=False):
-    frequencyKhz: int
-    signalDbm: int
-    signalDbmLevel: str
-    ssid: str
-    state: str
-
-    
-class GetRemote(TypedDict, total=False):    
-    macAddr: str
-    name: str 
-    pairingState: str
-    version: str

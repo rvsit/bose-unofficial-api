@@ -11,9 +11,9 @@ from bose_unofficial_api.types.speaker.system import (
     GetSystemInfo,
     GetSystemPowerControl,
     SystemPowerState,
-    GetWiFiStatus,
-    GetRemote,
 )
+from bose_unofficial_api.types.speaker.network import GetWiFiStatus
+from bose_unofficial_api.types.speaker.remote import GetRemote
 from bose_unofficial_api.types.speaker.system_capabilities import (
     GetSystemCapabilities,
 )
