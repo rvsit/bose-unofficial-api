@@ -5,6 +5,12 @@ import logging
 from bose_unofficial_api import auth
 from bose_unofficial_api.speaker import BoseSpeaker
 from bose_unofficial_api.variables import get_application_variables
+from bose_unofficial_api.event.observer import Observer
+
+
+class LogNotifyObserver(Observer):
+    def on_message(self, message: dict) -> None:
+        logging.info("NOTIFY Received message: %s", message.get("body", {}))
 
 
 async def main():
@@ -27,8 +33,9 @@ async def main():
     speaker = await BoseSpeaker.connect(
         ip_address=variables["ip_address"],
         jwt_token=variables["jwt_token"],
-        log_messages=True,
+        log_messages=False,
     )
+    speaker.connection.add_notify_observer(LogNotifyObserver())
 
     # Example of sending a message and waiting for its response
     now_playing = await speaker.api.get_now_playing()

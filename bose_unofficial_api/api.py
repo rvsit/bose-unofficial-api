@@ -1,22 +1,20 @@
 from bose_unofficial_api.connection import BoseWebsocketConnection
 from bose_unofficial_api.types.speaker.audio import (
     GetAudioFormat,
-    GetAudioVolume,
     GetAudioMode,
     GetAudioSurround,
+    GetAudioVolume,
 )
 from bose_unofficial_api.types.speaker.content import GetContentNowPlaying
+from bose_unofficial_api.types.speaker.network import GetWiFiStatus
+from bose_unofficial_api.types.speaker.remote import GetRemote
 from bose_unofficial_api.types.speaker.subscription import NotificationItem
 from bose_unofficial_api.types.speaker.system import (
     GetSystemInfo,
     GetSystemPowerControl,
     SystemPowerState,
 )
-from bose_unofficial_api.types.speaker.network import GetWiFiStatus
-from bose_unofficial_api.types.speaker.remote import GetRemote
-from bose_unofficial_api.types.speaker.system_capabilities import (
-    GetSystemCapabilities,
-)
+from bose_unofficial_api.types.speaker.system_capabilities import GetSystemCapabilities
 
 
 class BoseConnectionApi:

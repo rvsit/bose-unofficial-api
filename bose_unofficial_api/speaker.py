@@ -1,7 +1,8 @@
 from typing import Optional
+
+from bose_unofficial_api.api import BoseConnectionApi
 from bose_unofficial_api.capabilities import SpeakerCapabilities
 from bose_unofficial_api.connection import BoseWebsocketConnection
-from bose_unofficial_api.api import BoseConnectionApi
 from bose_unofficial_api.types.speaker import subscription
 
 
