@@ -49,13 +49,13 @@ class BoseWebsocketConnection:
         self.req_id += 1  # Increment reqID
         message = {
             "header": {
-                "reqID": self.req_id,
-                "version": version,
+                "token": self.jwt_token,
+                "resource": resource,
                 "msgtype": "REQUEST",
                 # GET, POST, PUT
-                "resource": resource,
                 "method": method,
-                "token": self.jwt_token,
+                "reqID": self.req_id,
+                "version": version,
                 "device": self.device_guid or "",
             },
             "body": body,
@@ -79,15 +79,12 @@ class BoseWebsocketConnection:
             except websockets.exceptions.ConnectionClosedOK:
                 logging.info("Connection closed")
                 exit(-1)
-                break
             except websockets.exceptions.ConnectionClosedError:
                 logging.warning("Connection closed error")
                 exit(-2)
-                break
             except:
                 logging.warning("Connection error")
                 exit(-3)
-                break
             header = message.get("header", {})
             req_id = header.get("reqID", None)
 
@@ -103,10 +100,7 @@ class BoseWebsocketConnection:
                         resource,
                         body,
                     )
-                if (
-                    resource == "/connectionReady"
-                    and connection_ready_future
-                ):
+                if resource == "/connectionReady" and connection_ready_future:
                     connection_ready_future.set_result(True)
                 else:
                     self.buffet[resource] = Future()
