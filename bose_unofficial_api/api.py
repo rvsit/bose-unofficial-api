@@ -44,6 +44,12 @@ class BoseConnectionApi:
     async def get_audio_format(self) -> GetAudioFormat:
         return await self.connection.send_and_get_body("GET", "/audio/format")
 
+    async def get_audio_mode(self) -> GetAudioMode:
+        return await self.connection.send_and_get_body("GET", "/audio/mode")
+
+    async def get_audio_surround(self) -> GetAudioSurround:
+        return await self.connection.send_and_get_body("GET", "/audio/surround")
+
     async def put_subscription(self, notifications: list[NotificationItem]) -> None:
         return await self.connection.send_and_get_body(
             "PUT", "/subscription", 2, {"notifications": notifications}
@@ -51,12 +57,6 @@ class BoseConnectionApi:
 
     async def get_remote(self) -> GetRemote:
         return await self.connection.send_and_get_body("GET", "/remote")
-
-    async def get_audio_mode(self) -> GetAudioMode:
-        return await self.connection.send_and_get_body("GET", "/audio/mode")
-
-    async def get_audio_surround(self) -> GetAudioSurround:
-        return await self.connection.send_and_get_body("GET", "/audio/surround")
 
     async def get_wifi_status(self) -> GetWiFiStatus:
         return await self.connection.send_and_get_body("GET", "/network/wifi/status")

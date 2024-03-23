@@ -43,6 +43,10 @@ This API has been tested with the following devices and functions:
   - `get_now_playing`
   - `get_audio_volume`
   - ❌ `get_audio_format`
+  - ❌ `get_remote`
+  - ❌ `get_audio_mode`
+  - ❌ `get_audio_surround`
+  - `get_wifi_status`
 - Bose Soundbar 700 (codename: `GINGER_CHEEVERS`)
   - `get_system_info`
   - `get_system_power_control`
@@ -50,6 +54,10 @@ This API has been tested with the following devices and functions:
   - `get_now_playing`
   - `get_audio_volume`
   - `get_audio_format`
+  - `get_remote`
+  - `get_audio_mode`
+  - `get_audio_surround`
+  - `get_wifi_status`
 
 This may work on the following devices (please report if working):
 
@@ -81,6 +89,10 @@ The following functions are available (checked if implemented):
 - [x] `/content/nowPlaying` (GET, `get_now_playing()`)
 - [x] `/audio/volume` (GET, `get_audio_volume()`)
 - [x] `/audio/format` (GET, `get_audio_format()`)
+- [x] `/remote` (GET, `get_remote()`)
+- [x] `/audio/mode` (GET, `get_audio_mode()`)
+- [x] `/audio/surround` (GET, `get_audio_surround()`)
+- [x] `/network/wifi/status` (GET, `get_wifi_status()`)
 - [ ] `/content/playbackRequest`
 - [ ] `/homekit/info`
 - [ ] `/cloudSync` (Req type pq2)
@@ -107,13 +119,11 @@ The following functions are available (checked if implemented):
 - [ ] `/system/setup`
 - [ ] `/adaptiq`
 - [ ] `/network/status`
-- [ ] `/network/wifi/status`
 - [ ] `/bluetooth/sink/macAddr`
 - [ ] `/remote/integration`
 - [ ] `/remote/integration/brandList`
 - [ ] `/remote/integration/tvBrand`
 - [ ] `/remote/integration/directEntry`
-- [ ] `/remote`
 - [ ] `/voice/settings`
 - [ ] `/voice/setup/start`
 - [ ] `/cec`
@@ -134,10 +144,8 @@ The following functions are available (checked if implemented):
 - [ ] `/audio/height`
 - [ ] `/audio/treble`
 - [ ] `/audio/center`
-- [ ] `/audio/surround`
 - [ ] `/audio/subwooferGain`
 - [ ] `/ui/lcd/brightness`
-- [ ] `/audio/mode`
 - [ ] `/system/battery`
 - [ ] `/bluetooth/source/list`
 - [ ] `/bluetooth/source/status`
